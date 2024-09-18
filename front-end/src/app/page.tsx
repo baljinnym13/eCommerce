@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useState } from "react";
-import Header from "../components/header";
+import Header from "@/components/header";
 import Foooter from "@/components/footer";
 
 export default function Home() {

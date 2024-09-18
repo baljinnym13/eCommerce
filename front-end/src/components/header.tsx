@@ -4,7 +4,7 @@ import { FaRegHeart } from "react-icons/fa";
 import { CgShoppingCart } from "react-icons/cg";
 import { Button } from "./ui/button";
 interface IHeaderProps {
-  title: string;
+  title?: string;
   color?: string;
   handler: () => void;
 }

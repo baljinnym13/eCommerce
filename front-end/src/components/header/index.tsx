@@ -8,16 +8,16 @@ import { Button } from "../ui/button";
 // interface IPUser extends IUser{
 //     password : string
 // }
-// interface IHeaderProps {
+// interface ItextProps {
 //   users: [];
 //   color?: string;
 // }
 
-interface IHeaderProps {
+interface ItextProps {
   title: string;
   color?: string;
 }
-const Header = ({ title }: IHeaderProps) => {
+const text = ({ title }: ItextProps) => {
   return (
     <div>
       {title}
@@ -32,4 +32,4 @@ const Header = ({ title }: IHeaderProps) => {
   );
 };
 
-export default Header;
+export default text;
