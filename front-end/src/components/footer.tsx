@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { BsTelephone } from "react-icons/bs";
 import { IoMailOutline } from "react-icons/io5";
@@ -8,7 +9,7 @@ import { FaLinkedin } from "react-icons/fa";
 
 const Foooter = () => {
   return (
-    <div className="bg-black text-white w-[1440px] flex flex-col gap-[43px] px-[200px] py-[64px]">
+    <div className="bg-black text-white w-9/12 flex flex-col gap-[43px] px-[200px] py-[64px] m-auto">
       <div className="flex justify-between">
         <img src="./logo.png" alt="logo" />
         <div className="flex gap-[38px]">
