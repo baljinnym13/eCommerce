@@ -13,7 +13,7 @@ const LogIn = () => {
           placeholder="Имэйл хаяг"
           className="w-[334px] h-[36px]"
         />
-        <Input type="password" placeholder="Нууц үг" />
+        <Input type="Password" placeholder="Нууц үг" />
         <Button className="bg-blue-700 text-white">Нэвтрэх</Button>
 
         <Link href="sdfsf" className="m-auto">
