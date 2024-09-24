@@ -8,20 +8,18 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const LogIn = () => {
+const ForgetPass = () => {
   const router = useRouter();
   const [userData, setUserData] = useState({
     email: "",
-    password: "",
   });
   console.log("userData", userData);
   const logIn = async () => {
-    const { email, password } = userData;
+    const { email } = userData;
 
     try {
       const res = await axios.post("http://localhost:8000/api/v1/auth/login", {
         email,
-        password,
       });
 
       if (res.status === 201) {
@@ -43,38 +41,29 @@ const LogIn = () => {
 
   return (
     <div className="flex flex-col items-center justify-center heightcalc gap-10">
-      <h2>Нэвтрэх</h2>
+      <h2>Нууц үг сэргээх</h2>
       <div className="flex flex-col gap-4">
         <Input
-          type="text"
-          placeholder="Имэйл хаяг"
+          type="password"
+          placeholder="Шинэ нууц үг"
           className="w-[334px] h-[36px]"
-          name="email"
-          onChange={handleChange}
-        />
-        <Input
-          type="Password"
-          placeholder="Нууц үг"
           name="password"
           onChange={handleChange}
         />
-        <Button className="bg-blue-700 text-white" onClick={logIn}>
-          Нэвтрэх
-        </Button>
+        <Input
+          type="password"
+          placeholder="Шинэ нууц үг давтах"
+          className="w-[334px] h-[36px]"
+          name="rePassword"
+          onChange={handleChange}
+        />
 
-        <Link
-          href="/forgetPass"
-          className="m-auto
-        "
-        >
-          Нууц үг мартсан
-        </Link>
-      </div>
-      <div className="w-[334px] h-[36px] flex justify-center items-center  border border-blue-700 text-blue-700 rounded-lg">
-        <Link href="../signup">Бүртгүүлэх</Link>
+        <Button className="bg-blue-700 text-white" onClick={logIn}>
+          Үүсгэх
+        </Button>
       </div>
     </div>
   );
 };
 
-export default LogIn;
+export default ForgetPass;

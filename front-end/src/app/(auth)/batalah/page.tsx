@@ -8,20 +8,18 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const LogIn = () => {
+const Otp = () => {
   const router = useRouter();
   const [userData, setUserData] = useState({
     email: "",
-    password: "",
   });
   console.log("userData", userData);
   const logIn = async () => {
-    const { email, password } = userData;
+    const { email } = userData;
 
     try {
       const res = await axios.post("http://localhost:8000/api/v1/auth/login", {
         email,
-        password,
       });
 
       if (res.status === 201) {
@@ -43,7 +41,9 @@ const LogIn = () => {
 
   return (
     <div className="flex flex-col items-center justify-center heightcalc gap-10">
-      <h2>Нэвтрэх</h2>
+      <img src="./opt.png" alt="" />
+      <h2>Баталгаажуулах</h2>
+      <p>“mujo@nest.edu.mn” хаягт илгээсэн баталгаажуулах кодыг оруулна уу</p>
       <div className="flex flex-col gap-4">
         <Input
           type="text"
@@ -52,29 +52,13 @@ const LogIn = () => {
           name="email"
           onChange={handleChange}
         />
-        <Input
-          type="Password"
-          placeholder="Нууц үг"
-          name="password"
-          onChange={handleChange}
-        />
-        <Button className="bg-blue-700 text-white" onClick={logIn}>
-          Нэвтрэх
-        </Button>
 
-        <Link
-          href="/forgetPass"
-          className="m-auto
-        "
-        >
-          Нууц үг мартсан
-        </Link>
-      </div>
-      <div className="w-[334px] h-[36px] flex justify-center items-center  border border-blue-700 text-blue-700 rounded-lg">
-        <Link href="../signup">Бүртгүүлэх</Link>
+        <Button className="bg-blue-700 text-white" onClick={logIn}>
+          Дахин илгээх (30)
+        </Button>
       </div>
     </div>
   );
 };
 
-export default LogIn;
+export default Otp;
