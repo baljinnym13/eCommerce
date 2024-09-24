@@ -9,6 +9,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const SignUp = () => {
+  const router = useRouter();
   const [userData, setUserData] = useState({
     firstname: "",
     lastname: "",
@@ -16,12 +17,11 @@ const SignUp = () => {
     password: "",
     repassword: "",
   });
-  console.log(userData);
+  console.log("userData", userData);
   const signUp = async () => {
     const { firstname, lastname, email, password, repassword } = userData;
     if (password !== repassword) {
-      toast.error("Нууц үг хоорондоо тохирохгүй байна.");
-      return;
+      return toast.error("Нууц үг хоорондоо тохирохгүй байна.");
     }
     try {
       const res = await axios.post("http://localhost:8000/api/v1/auth/signup", {
@@ -30,10 +30,13 @@ const SignUp = () => {
         email,
         password,
       });
-      console.log("response", res);
+
       if (res.status === 201) {
-        toast.success("User successfully signed up", { autoClose: 1000 });
-        useRouter().push("/login");
+        toast.success("User successfully signed up", {
+          autoClose: 1000,
+        });
+        router.push("/login");
+        console.log("response");
       }
     } catch (error) {
       console.error("There was an error signing up:", error);

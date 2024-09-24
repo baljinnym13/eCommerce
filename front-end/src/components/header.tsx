@@ -3,6 +3,8 @@ import React, { ChangeEvent } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { CgShoppingCart } from "react-icons/cg";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -14,21 +16,21 @@ const Header = () => {
           <button>Ангилал</button>
         </div>
         <div>
-          <button className="flex justify-between items-center gap-2 bg-gray-900 p-2 rounded-2xl">
+          <button className="flex justify-center items-center gap-2 bg-gray-900 px-4 py-1 rounded-2xl">
             <FaSearch />
-            <input
+            <Input
               type="text"
               placeholder="Бүтээгдэхүүн хайх"
-              className="bg-transparent"
+              className="border-transparent"
             />
           </button>
         </div>
-        <div className="flex gap-2">
+        <div className="flex justify-center items-center gap-2">
           <FaRegHeart />
           <CgShoppingCart />
-          <button>Бүртгүүлэх</button>
-          <button>Нэвтрэх</button>
-          <input type="text" />
+
+          <Link href="/signup">Бүртгүүлэх</Link>
+          <Link href="/login">Нэвтрэх</Link>
         </div>
       </div>
     </div>
@@ -36,4 +38,3 @@ const Header = () => {
 };
 
 export default Header;
-// onChange={handlechange}

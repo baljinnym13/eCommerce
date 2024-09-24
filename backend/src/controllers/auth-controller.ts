@@ -3,17 +3,42 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 export const Login = async (req: Request, res: Response) => {
-  res.status(200).json({ message: "login success" });
+  try {
+    const { email, password } = req.body;
+    console.log("first", email);
+    const user = await User.findOne({ email });
+    if (!user) {
+      res.status(404).json({ message: "hereglegch oldsongv" });
+    } else {
+      const ischeck = bcrypt.compareSync(password, user.password.toString());
+      if (!ischeck) {
+        res.status(400).json({ message: "email or password buruu baina" });
+      } else {
+        const token = jwt.sign({ id: user.id }, "JWT_TOKEN_PASS@123", {
+          expiresIn: "10h",
+        });
+        res.status(201).json({
+          message: "success",
+          token,
+          user,
+        });
+      }
+    }
+  } catch (error) {
+    res.status(401).json({ message: error });
+  }
 };
 export const signup = async (req: Request, res: Response) => {
   try {
-    const { firstname, lastname, email, password, address } = req.body;
+    const { firstname, lastname, email, password } = req.body;
 
-    if (!firstname || !lastname || !email || !password || !address) {
+    if (!firstname || !lastname || !email || !password) {
       return res.status(400).json({ message: "hooson utga baij bolohgvi" });
     }
+    console.log("first", firstname, lastname, email, password);
 
     const createdUser = await User.create({
       firstname,
@@ -27,18 +52,3 @@ export const signup = async (req: Request, res: Response) => {
     res.status(500).json({ message: " server error", error: error });
   }
 };
-
-// const signUp = async (req, res) => {
-//     try {
-//       const { email, name, password } = req.body;
-//       const hashedPassword = bcrypt.hashSync(password, 10);
-//       const data = await sql`
-//     INSERT INTO users(email, name, password, profile_img)
-//     VALUES(${email}, ${name}, ${hashedPassword}, 'url');
-//     `;
-//       console.log("DATA", data);
-//       res.status(201).json({ message: "New user registered successfully" });
-//     } catch (error) {
-//       res.status(401).json({ message: error });
-//     }
-//   };
