@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 interface ICategory {
   name: string;
   descreption: string;
@@ -19,3 +19,5 @@ const categorySchema = new Schema<ICategory>(
     timestamps: true,
   }
 );
+const Category = model<ICategory>("category", categorySchema);
+export default Category;

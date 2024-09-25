@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import authRoute from "./routes/auth-route";
+import catRoute from "./routes/categoryRoute";
+import proRoute from "./routes/product-route";
 import { connectDB } from "./config/db";
 import { sendemail } from "./utils/send-email";
 const PORT = process.env.PORT || "";
@@ -18,6 +20,8 @@ const app = express();
 // middlewares
 app.use(cors());
 app.use(express.json());
+app.use("/api/v1", catRoute);
+app.use("/api/v1", proRoute);
 app.use("/api/v1/auth", authRoute);
 
 app.get("/", async (req: Request, res: Response) => {

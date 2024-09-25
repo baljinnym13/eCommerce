@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Category from "../models/category.model";
 
-export const createCategory = async (req: Request, res: Response) => {
+export const createProduct = async (req: Request, res: Response) => {
   const { name, descreption } = req.body;
   try {
     if (!name || !descreption) {
