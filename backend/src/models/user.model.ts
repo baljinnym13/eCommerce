@@ -10,6 +10,9 @@ interface IUser {
   role: String;
   profile_img: String;
   address?: String;
+  otp: String;
+  passwordResetToken: String;
+  passwordResetTokenExpire: Date;
   created_at: Date;
   updated_at: Date;
 }
@@ -46,6 +49,18 @@ const userSchema = new Schema<IUser>({
   },
   address: {
     type: String,
+  },
+  otp: {
+    type: String,
+    default: "",
+  },
+  passwordResetToken: {
+    type: String,
+    default: "",
+  },
+  passwordResetTokenExpire: {
+    type: Date,
+    default: Date.now,
   },
   created_at: {
     type: Date,
