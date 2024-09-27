@@ -1,52 +1,24 @@
-// "use client";
-
-// import { Button } from "@/components/ui/button";
-// import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
-// import {
-//   InputOTP,
-//   InputOTPGroup,
-//   InputOTPSlot,
-// } from "@/components/ui/input-otp";
-
-// const verifyOtp = () => {
-//   return (
-//     <div className="flex flex-col items-center justify-center heightcalc gap-10">
-//       <img src="./opt.png" alt="" />
-//       <h2>Баталгаажуулах</h2>
-//       <p>“mujo@nest.edu.mn” хаягт илгээсэн баталгаажуулах кодыг оруулна уу</p>
-//       <div className="flex flex-col gap-4">
-//         <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
-//           <InputOTPGroup>
-//             <InputOTPSlot index={0} />
-//             <InputOTPSlot index={1} />
-//             <InputOTPSlot index={2} />
-//             <InputOTPSlot index={3} />
-//           </InputOTPGroup>
-//         </InputOTP>
-//         <Button className="bg-blue-700 text-white">Дахин илгээх (30)</Button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default verifyOtp;
-
 "use client";
 
+import { UserContex } from "@/app/context/user-context";
 import { Button } from "@/components/ui/button";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { Value } from "@radix-ui/react-select";
 import { useRouter } from "next/navigation";
+import { apiURL } from "@/utils/apiHome";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
 
 const Otp = () => {
+  const { verifyUserEmail, email } = useContext(UserContex);
+  const [otpValue, setOtpValue] = useState("");
   const router = useRouter();
   const [countDown, setCountDown] = useState(30);
-  const [otpValue, setOtpValue] = useState("");
 
   useEffect(() => {
     if (countDown > 0) {
@@ -58,15 +30,28 @@ const Otp = () => {
     }
   }, [countDown]);
 
-  const handleResendOtp = () => {
-    setCountDown(30);
+  const verifyOtp = async (value: string) => {
+    setOtpValue(value);
+    console.log("value", value);
+    if (value.length === 4) {
+      try {
+        const res = await axios.post(`${apiURL}/api/v1/auth/verifyOtp`, {
+          email,
+          otpValue: value,
+        });
+
+        if (res.status === 200) {
+          console.log("email success");
+        }
+      } catch (error) {
+        console.log(error);
+        console.log("otp buruu baina");
+      }
+    }
   };
 
-  const handleConfirmOtp = (value: string) => {
-    setOtpValue(value);
-    if (value.length === 4) {
-      router.push("/forgetpass/newpass");
-    }
+  const handleResendOtp = () => {
+    setCountDown(30);
   };
 
   return (
@@ -74,10 +59,10 @@ const Otp = () => {
       <img src="./opt.png" alt="" />
       <h1 className="mt-7 text-2xl font-bold">Баталгаажуулах</h1>
       <p className="mt-2 mb-6 text-text-primary">
-        “mujo@nest.edu.mn” хаягт илгээсэн баталгаажуулах кодыг оруулна уу
+        {email} хаягт илгээсэн баталгаажуулах кодыг оруулна уу
       </p>
       <div className="flex flex-col gap-4 text-sm">
-        <InputOTP maxLength={4} value={otpValue} onChange={handleConfirmOtp}>
+        <InputOTP maxLength={4} value={otpValue} onChange={verifyOtp}>
           <InputOTPGroup className="bg-white">
             <InputOTPSlot className="w-14 h-14" index={0} />
             <InputOTPSlot className="w-14 h-14" index={1} />
@@ -87,7 +72,7 @@ const Otp = () => {
         </InputOTP>
         <Button
           className="cursor-pointer text-muted-foreground mt-12 underline text-sm font-medium"
-          onClick={handleResendOtp}
+          onClick={verifyUserEmail}
           variant="link"
         >
           Дахин илгээх ({countDown})

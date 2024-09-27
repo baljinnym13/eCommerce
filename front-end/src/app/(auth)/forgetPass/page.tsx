@@ -3,21 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { UserContex } from "@/app/context/user-context";
 
 const ForgetPass = () => {
-  const [email, setEmail] = useState;
-  const handleEmail = (e: ChangeEvent<HTMLAnchorElement>) => {
-    setEmail(e.target.value);
-  };
-  const handleSendOtp = () => {
-    try {
-      axios.post("http://localhost:800/api/v1/auth/forgetPass", { email });
-    } catch (error) {}
-  };
+  const { verifyUserEmail, setEmail } = useContext(UserContex);
 
   return (
     <div className="flex flex-col items-center justify-center heightcalc gap-10">
@@ -28,10 +21,11 @@ const ForgetPass = () => {
           placeholder="Имэйл хаяг"
           className="w-[334px] h-[36px]"
           name="email"
-          onChange={handleEmail}
+          // onChange={handleEmail}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
-        <Button className="bg-blue-700 text-white" onClick={handleSendOtp}>
+        <Button className="bg-blue-700 text-white" onClick={verifyUserEmail}>
           Илгээх
         </Button>
       </div>

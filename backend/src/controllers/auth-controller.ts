@@ -91,8 +91,8 @@ export const verifyOtp = async (req: Request, res: Response) => {
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
-    finduser?.passwordResetToken = hashedResetToken;
-    finduser?.passwordResetTokenExpire = new Date(Date.now() + 10 * 60 * 1000);
+    finduser.passwordResetToken = hashedResetToken;
+    finduser.passwordResetTokenExpire = new Date(Date.now() + 10 * 60 * 1000);
     await finduser?.save();
     await sendemail(
       email,

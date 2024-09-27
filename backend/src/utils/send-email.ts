@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 export const sendemail = async (email: string, otp: string) => {
   const info = await transporter.sendMail({
     from: "baljinnym1318@gmail.com", // sender address
-    to: "abilay1208@gmail.com", // list of receivers
+    to: email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
     html: generateHtmlTemplate(otp), // html body
