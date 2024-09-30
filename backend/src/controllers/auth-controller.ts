@@ -81,12 +81,16 @@ export const forgetPass = async (req: Request, res: Response) => {
 export const verifyOtp = async (req: Request, res: Response) => {
   try {
     const { email, otpValue } = req.body;
+    console.log("email", email, otpValue);
 
     const finduser = await User.findOne({ email: email, otp: otpValue });
+    console.log("finduser", finduser);
     if (!finduser) {
       return res.status(404).json({ message: "hereglegch oldsongv" });
     }
+
     const resetToken = crypto.randomBytes(25).toString("hex");
+    console.log("resettoken", resetToken);
     const hashedResetToken = crypto
       .createHash("sha256")
       .update(resetToken)
@@ -96,7 +100,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
     await finduser?.save();
     await sendemail(
       email,
-      `<a href="http://localhost:3000/newPass" ${resetToken} >huuts vg sergeeh holboos</a>`
+      `<a href="http://localhost:3000/newPass?resetToken=${resetToken}">huuts vg sergeeh holboos</a>`
     );
     res.status(200).json({ message: "send email success" });
   } catch (error) {
@@ -112,7 +116,7 @@ export const verifyPass = async (req: Request, res: Response) => {
       .digest("hex");
     const finduser = await User.findOne({
       passwordResetToken: hashedResetToken,
-      passwordResetTokenExpire: { $gt: Date.now },
+      passwordResetTokenExpire: { $gt: Date.now() },
     });
     if (!finduser) {
       return res.status(400).json({ message: "hugtsaa duuslaa" });
@@ -121,6 +125,7 @@ export const verifyPass = async (req: Request, res: Response) => {
     await finduser?.save();
     res.status(200).json({ message: "success" });
   } catch (error) {
+    console.log(error);
     res.status(401).json({ message: error });
   }
 };

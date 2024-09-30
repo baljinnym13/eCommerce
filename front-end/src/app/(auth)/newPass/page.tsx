@@ -2,68 +2,75 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
+import { apiURL } from "@/utils/apiHome";
 
-const ForgetPass = () => {
+// import { useRouter } from "next/navigation";
+
+const NewPass = () => {
   const router = useRouter();
-  const [userData, setUserData] = useState({
-    email: "",
-  });
-  console.log("userData", userData);
-  const logIn = async () => {
-    const { email } = userData;
-
-    try {
-      const res = await axios.post("http://localhost:8000/api/v1/auth/login", {
-        email,
+  const { toast } = useToast();
+  const [password, setPassword] = useState("");
+  const [repassword, setRePassword] = useState("");
+  const params = useSearchParams();
+  console.log(params.get("resetToken"));
+  const handleNewPassword = async () => {
+    if (!(password === repassword)) {
+      console.log("Clicked not match");
+      toast({
+        title: "Алдаа",
+        description: "Нууц үг хоорондоо таарахгүй байна",
       });
-
-      if (res.status === 201) {
-        toast.success("User successfully login", {
-          autoClose: 1000,
-        });
-        router.push("/");
-        console.log("response");
+      return;
+    }
+    try {
+      const res = await axios.post(`${apiURL}/api/v1/auth/newPass`, {
+        password: password,
+        resetToken: params.get("resetToken"),
+      });
+      if (res.status === 200) {
+        router.push("/login");
       }
     } catch (error) {
-      console.error("There was an error signing up:", error);
-      toast.error("Failed to sign up. Please try again.");
+      console.log("first", error);
     }
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData((pre) => ({ ...pre, [name]: value }));
   };
 
   return (
-    <div className="flex flex-col items-center justify-center heightcalc gap-10">
-      <h2>Нууц үг сэргээх</h2>
-      <div className="flex flex-col gap-4">
-        <Input
-          type="password"
-          placeholder="Шинэ нууц үг"
-          className="w-[334px] h-[36px]"
-          name="password"
-          onChange={handleChange}
-        />
-        <Input
-          type="password"
-          placeholder="Шинэ нууц үг давтах"
-          className="w-[334px] h-[36px]"
-          name="rePassword"
-          onChange={handleChange}
-        />
-
-        <Button className="bg-blue-700 text-white" onClick={logIn}>
-          Үүсгэх
-        </Button>
+    <div className="h-[calc(100vh-350px)] flex flex-col items-center">
+      <div className="w-[320px] mt-24">
+        <h1 className="text-2xl font-semibold mb-8 text-center">
+          Нууц үг сэргээх
+        </h1>
+        <div className="flex flex-col gap-4 text-sm">
+          <Input
+            type="password"
+            placeholder="Шинэ нууц үг"
+            className="input-primary"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Шинэ нууц үг давтах"
+            className="input-primary"
+            onChange={(e) => setRePassword(e.target.value)}
+          />
+          <ul className="list-disc pl-5 text-muted-foreground text-xs font-light leading-5 flex flex-col gap-0.5">
+            <li>Том үсэг орсон байх</li>
+            <li>Жижиг үсэг орсон байх</li>
+            <li>Тоо орсон байх</li>
+            <li>Тэмдэгт орсон байх</li>
+          </ul>
+          <Button className="button-info" onClick={handleNewPassword}>
+            Үүсгэх
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
-export default ForgetPass;
+export default NewPass;

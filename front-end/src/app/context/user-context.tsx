@@ -86,16 +86,3 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     </UserContex.Provider>
   );
 };
-// export const ProfileProvider = ({
-//     children,
-//   }: {
-//     children: React.ReactNode;
-//   }) => {
-//     const router = useRouter();
-//     const [userForm, setUserForm] = useState<IUser>({
-//       firstName: "",
-//       lastName: "",
-//       email: "",
-//       password: "",
-//       repassword: "",
-//     });

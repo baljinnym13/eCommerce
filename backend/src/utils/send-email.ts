@@ -7,14 +7,14 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // true for port 465, false for other ports
   auth: {
-    user: "baljinnym1318@gmail.com",
-    pass: "tepo zmdd elwk xgfm",
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
 export const sendemail = async (email: string, otp: string) => {
   const info = await transporter.sendMail({
-    from: "baljinnym1318@gmail.com", // sender address
+    from: process.env.EMAIL_FROM_USER, // sender address
     to: email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body

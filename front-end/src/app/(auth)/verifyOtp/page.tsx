@@ -7,7 +7,6 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { Value } from "@radix-ui/react-select";
 import { useRouter } from "next/navigation";
 import { apiURL } from "@/utils/apiHome";
 
@@ -15,7 +14,7 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 const Otp = () => {
-  const { verifyUserEmail, email } = useContext(UserContex);
+  const { email } = useContext(UserContex);
   const [otpValue, setOtpValue] = useState("");
   const router = useRouter();
   const [countDown, setCountDown] = useState(30);
@@ -42,6 +41,7 @@ const Otp = () => {
 
         if (res.status === 200) {
           console.log("email success");
+          router.push("/login");
         }
       } catch (error) {
         console.log(error);
@@ -72,7 +72,7 @@ const Otp = () => {
         </InputOTP>
         <Button
           className="cursor-pointer text-muted-foreground mt-12 underline text-sm font-medium"
-          onClick={verifyUserEmail}
+          onClick={handleResendOtp}
           variant="link"
         >
           Дахин илгээх ({countDown})
