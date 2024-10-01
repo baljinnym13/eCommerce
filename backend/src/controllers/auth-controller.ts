@@ -21,10 +21,11 @@ export const Login = async (req: Request, res: Response) => {
         const token = jwt.sign({ id: user.id }, "JWT_TOKEN_PASS@123", {
           expiresIn: "10h",
         });
+        const { firstname, profile_img };
         res.status(201).json({
           message: "success",
           token,
-          user,
+          user: { name: user.firstname },
         });
       }
     }

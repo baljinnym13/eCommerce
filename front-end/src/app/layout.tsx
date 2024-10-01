@@ -5,7 +5,8 @@ import Header from "@/components/header";
 import Foooter from "@/components/footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { UserProvider } from "./context/user-context";
+import { UserContex, UserProvider } from "./context/user-context";
+import { useContext, useEffect } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,13 +35,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { user, fetchUserData } = useContext(UserContex);
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <UserProvider>
-          <Header />
+          <Header user={user} />
           {children}
           <Foooter />
           <ToastContainer />

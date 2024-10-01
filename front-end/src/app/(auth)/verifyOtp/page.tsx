@@ -70,6 +70,7 @@ const Otp = () => {
             <InputOTPSlot className="w-14 h-14" index={3} />
           </InputOTPGroup>
         </InputOTP>
+
         <Button
           className="cursor-pointer text-muted-foreground mt-12 underline text-sm font-medium"
           onClick={handleResendOtp}

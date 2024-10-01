@@ -28,6 +28,9 @@ const LogIn = () => {
         toast.success("User successfully login", {
           autoClose: 1000,
         });
+        const { token } = res.data;
+        localStorage.setItem("token", token);
+        console.log("token", token);
         router.push("/");
         console.log("response");
       }

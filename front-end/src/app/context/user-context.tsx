@@ -3,7 +3,7 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { toast } from "react-toastify";
+
 import { apiURL } from "@/utils/apiHome";
 import { useState } from "react";
 
@@ -22,6 +22,8 @@ type UserContexProps = {
   setOtpValue: Dispatch<SetStateAction<string>>;
   otpValue: string;
   email: string;
+  fetchUserData: () => void;
+  user: {};
 };
 
 export const UserContex = createContext<UserContexProps>({
@@ -31,12 +33,15 @@ export const UserContex = createContext<UserContexProps>({
   setOtpValue: () => {},
   otpValue: "",
   email: "",
+  fetchUserData: () => {},
+  user: {},
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [otpValue, setOtpValue] = useState("");
+  const [user, setUser] = useState({});
 
   const verifyOtp = async () => {
     try {
@@ -71,6 +76,26 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   console.log("first", otpValue);
   console.log("email", email);
 
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      //
+      const response = await axios.get(`${apiURL}/users/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setUser(response.data.profile);
+        console.log("USER", response.data);
+        3;
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
   return (
     <UserContex.Provider
       value={{
@@ -80,6 +105,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         verifyUserEmail,
         setEmail,
         email,
+        fetchUserData,
+        user,
       }}
     >
       {children}

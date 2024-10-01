@@ -6,7 +6,8 @@ import { CgShoppingCart } from "react-icons/cg";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 
-const Header = () => {
+const Header = ({ user }) => {
+  console.log("user", user);
   return (
     <div className="w-9/12 bg-black py-4 px-8 m-auto">
       <div className="flex w-full justify-between text-white ">
