@@ -6,7 +6,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { sendemail } from "../utils/send-email";
 import crypto from "crypto";
-export const Login = async (req: Request, res: Response) => {
+import { generateToken } from "../utils/jwt";
+
+export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     console.log("first", email);
@@ -18,14 +20,12 @@ export const Login = async (req: Request, res: Response) => {
       if (!ischeck) {
         res.status(400).json({ message: "email or password buruu baina" });
       } else {
-        const token = jwt.sign({ id: user.id }, "JWT_TOKEN_PASS@123", {
-          expiresIn: "10h",
-        });
-        const { firstname, profile_img };
+        const token = generateToken({ id: user.id });
+        const { firstname, profile_img, email } = user;
         res.status(201).json({
           message: "success",
           token,
-          user: { name: user.firstname },
+          user: { firstname, profile_img, email },
         });
       }
     }
@@ -38,6 +38,7 @@ export const currentUser = async (req: Request, res: Response) => {
   const findUser = await User.findById(id);
   res.status(200).json({ user: findUser, message: "success" });
 };
+
 export const signup = async (req: Request, res: Response) => {
   try {
     const { firstname, lastname, email, password } = req.body;

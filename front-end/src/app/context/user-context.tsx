@@ -1,18 +1,23 @@
 "use client";
 
-import { createContext, Dispatch, SetStateAction } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+} from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
 import { apiURL } from "@/utils/apiHome";
 import { useState } from "react";
+import { set } from "date-fns";
 
 interface IUser {
   firstName: String;
   lastName: String;
   email: String;
-  password: String;
-  repassword: String;
 }
 
 type UserContexProps = {
@@ -23,7 +28,9 @@ type UserContexProps = {
   otpValue: string;
   email: string;
   fetchUserData: () => void;
-  user: {};
+  user: IUser | null;
+  setUser: Dispatch<SetStateAction<IUser | null>>;
+  setToken: Dispatch<SetStateAction<string | null>>;
 };
 
 export const UserContex = createContext<UserContexProps>({
@@ -34,14 +41,17 @@ export const UserContex = createContext<UserContexProps>({
   otpValue: "",
   email: "",
   fetchUserData: () => {},
-  user: {},
+  user: null,
+  setUser: () => {},
+  setToken: () => {},
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState<string | null>(null);
   const [otpValue, setOtpValue] = useState("");
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<IUser | null>(null);
 
   const verifyOtp = async () => {
     try {
@@ -78,16 +88,16 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem("token");
+      //   const token = localStorage.getItem("token");
       //
-      const response = await axios.get(`${apiURL}/users/profile`, {
+      const response = await axios.get(`${apiURL}/api/v1/auth/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       if (response.status === 200) {
-        setUser(response.data.profile);
+        setUser(response.data.user);
         console.log("USER", response.data);
         3;
       }
@@ -96,6 +106,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  useEffect(() => {
+    if (token) {
+      fetchUserData();
+    } else {
+      setToken(localStorage.getItem("token"));
+    }
+  }, [token]);
   return (
     <UserContex.Provider
       value={{
@@ -107,9 +124,15 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         email,
         fetchUserData,
         user,
+        setUser,
+        setToken,
       }}
     >
       {children}
     </UserContex.Provider>
   );
+};
+
+export const useUser = () => {
+  return useContext(UserContex);
 };

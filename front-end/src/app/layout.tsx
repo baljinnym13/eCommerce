@@ -35,19 +35,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { user, fetchUserData } = useContext(UserContex);
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <UserProvider>
-          <Header user={user} />
+          <Header />
           {children}
           <Foooter />
           <ToastContainer />

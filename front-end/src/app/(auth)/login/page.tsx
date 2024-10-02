@@ -7,9 +7,11 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useUser } from "@/app/context/user-context";
 
 const LogIn = () => {
   const router = useRouter();
+  const { setUser, setToken } = useUser();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -28,9 +30,11 @@ const LogIn = () => {
         toast.success("User successfully login", {
           autoClose: 1000,
         });
-        const { token } = res.data;
+        const { token, user } = res.data;
         localStorage.setItem("token", token);
         console.log("token", token);
+        setUser(user);
+        setToken(token);
         router.push("/");
         console.log("response");
       }

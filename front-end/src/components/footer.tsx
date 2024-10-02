@@ -9,7 +9,7 @@ import { FaLinkedin } from "react-icons/fa";
 
 const Foooter = () => {
   return (
-    <div className="bg-black text-white w-9/12 flex flex-col gap-[43px] px-[200px] py-[64px] m-auto">
+    <div className="bg-black text-white w-full flex flex-col gap-[43px] px-[200px] py-[64px] m-auto">
       <div className="flex justify-between">
         <img src="./logo.png" alt="logo" />
         <div className="flex gap-[38px]">

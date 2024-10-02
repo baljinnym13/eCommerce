@@ -1,6 +1,6 @@
 import { Router } from "express";
 import {
-  Login,
+  login,
   signup,
   forgetPass,
   currentUser,
@@ -12,12 +12,12 @@ import { authentication } from "../middlewares/authentication";
 
 const router = Router();
 
-router.route("/login").post(Login);
+router.route("/login").post(login);
 router.route("/signup").post(signup);
 router.route("/forgeyPass").post(forgetPass);
 router.route("/verifyOtp").post(verifyOtp);
 router.route("/newPass").post(verifyPass);
-router.route("/current-user").post(authentication, currentUser);
+router.route("/profile").get(authentication, currentUser);
 router.route("/user").get(getUser);
 
 export default router;
