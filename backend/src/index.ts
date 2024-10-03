@@ -21,7 +21,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/v1", catRoute);
-app.use("/api/v1", proRoute);
+app.use("/api/v1/product", proRoute);
 app.use("/api/v1/auth", authRoute);
 
 app.get("/", async (req: Request, res: Response) => {
