@@ -15,32 +15,6 @@ export const Hero = () => {
       </div>
 
       {/* product oruulj irj maplana */}
-      <div className=" w-9/12 flex  gap-4 mb-10">
-        <Card className="relative">
-          <img src="/image.png" alt="img" className="rounded-lg border-none " />
-          <Heart className="absolute right-4 top-4 " color="#c7c6c6" />
-          <p>The Prompt Magazine</p>
-          <p>120’000₮</p>
-        </Card>
-        <Card className="relative">
-          <img src="/image.png" alt="img" className="rounded-lg border-none " />
-          <Heart className="absolute right-4 top-4 " color="#c7c6c6" />
-          <p>The Prompt Magazine</p>
-          <p>120’000₮</p>
-        </Card>
-        <Card className="relative">
-          <img src="/image.png" alt="img" className="rounded-lg border-none " />
-          <Heart className="absolute right-4 top-4 " color="#c7c6c6" />
-          <p>The Prompt Magazine</p>
-          <p>120’000₮</p>
-        </Card>
-        <Card className="relative">
-          <img src="/image.png" alt="img" className="rounded-lg border-none " />
-          <Heart className="absolute right-4 top-4 " color="#c7c6c6" />
-          <p>The Prompt Magazine</p>
-          <p>120’000₮</p>
-        </Card>
-      </div>
     </div>
   );
 };

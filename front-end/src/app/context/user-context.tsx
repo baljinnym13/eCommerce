@@ -12,7 +12,6 @@ import axios from "axios";
 
 import { apiURL } from "@/utils/apiHome";
 import { useState } from "react";
-import { set } from "date-fns";
 
 interface IUser {
   firstName: String;
@@ -88,8 +87,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const fetchUserData = async () => {
     try {
-      //   const token = localStorage.getItem("token");
-      //
       const response = await axios.get(`${apiURL}/api/v1/auth/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -105,7 +102,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Error fetching user data:", error);
     }
   };
-
   useEffect(() => {
     if (token) {
       fetchUserData();
