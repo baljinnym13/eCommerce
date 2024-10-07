@@ -31,8 +31,8 @@ export const getProducts = async (req: Request, res: Response) => {
 export const getProduct = async (req: Request, res: Response) => {
   const { productId } = req.params;
   try {
-    const products = await Product.findById({ _id: productId });
-    res.status(200).json({ message: "success to get product", products });
+    const product = await Product.findById({ _id: productId });
+    res.status(200).json(product);
   } catch (error) {
     console.error(error);
     res.status(400).json({ message: "failed to get product" });

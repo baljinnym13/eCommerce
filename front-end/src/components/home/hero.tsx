@@ -2,6 +2,7 @@
 
 import { Heart } from "lucide-react";
 import { Card } from "../ui/card";
+import { ProductCard } from "../product-card";
 
 export const Hero = () => {
   return (
@@ -13,6 +14,7 @@ export const Hero = () => {
           <h1>120’000₮</h1>
         </div>
       </div>
+      
 
       {/* product oruulj irj maplana */}
     </div>
