@@ -54,3 +54,46 @@ export const ProductProvider = ({
     </ProductContext.Provider>
   );
 };
+
+// category
+// :
+// "64a6f9ecf1a3cbe3f4f8c004"
+// createdAt
+// :
+// "2024-09-30T10:59:30.703Z"
+// description
+// :
+// "Stylish leather jacket"
+// discount
+// :
+// 20
+// images
+// :
+// ['https://i.ibb.co/cLcXphk/image3.png']
+// isNew
+// :
+// true
+// isnew
+// :
+// true
+// name
+// :
+// "Leather Jacket"
+// price
+// :
+// 1200000
+// quantity
+// :
+// 15
+// size
+// :
+// "XL"
+// updatedAt
+// :
+// "2024-09-30T10:59:30.703Z"
+// _id
+// :
+// "66fa5aef9561796225b3743c"
+// [[Prototype]]
+// :
+// Object

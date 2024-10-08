@@ -15,7 +15,7 @@ export default function HomeContex() {
 function Home() {
   const { products, fetchProductData } = useContext(ProductContext);
 
-  console.log("produstssaaas", products);
+  // console.log("produstssaaas", products);
   return (
     <main>
       <Hero />
