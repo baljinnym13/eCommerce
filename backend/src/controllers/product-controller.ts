@@ -38,3 +38,14 @@ export const getProduct = async (req: Request, res: Response) => {
     res.status(400).json({ message: "failed to get product" });
   }
 };
+export const getRelProducts = async (req: Request, res: Response) => {
+  const { categoryId } = req.params;
+  try {
+    const relProduct = await Product.find({ category: categoryId });
+
+    res.status(200).json(relProduct);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ message: "failed to get product" });
+  }
+};
