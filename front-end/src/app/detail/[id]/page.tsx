@@ -6,6 +6,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
+import Review from "@/components/review";
 
 interface IData {
   name: string;
@@ -52,61 +53,79 @@ const Page: NextPage<any> = ({ params }) => {
   useEffect(() => {
     relatedProduct();
   }, [proData]);
+  const checksize = () => {};
 
   return (
     <>
-      <div className="flex w-9/12 m-auto justify-between">
-        <div className="flex flex-1">
-          <div className="flex flex-col ">
-            {proData.images?.map((img, index) => (
+      <div className="flex w-9/12 m-auto justify-between  my-8 gap-5">
+        <div className="flex flex-1 gap-4">
+          <div className="flex flex-col justify-start mt-8 gap-2 ">
+            {products.map((product, index) => (
               <img
-                src={img}
+                src={product.images[0]}
                 alt="images"
                 key={index}
-                className="w-[422px] h-[521px] rounded-2xl"
+                className="w-[87px] h-[87px] rounded-lg"
               />
             ))}
           </div>
           <div>
-            <img src={proData.images ? proData.images[0] : ""} alt="" />
+            <img
+              src={proData.images ? proData.images[0] : ""}
+              alt=""
+              className="w-[422px] h-[5   21px] rounded-2xl"
+            />
           </div>
         </div>
-        <div className="flex flex-col flex-1">
-          <p>{proData.isNew ? "shine" : "huuchin"}</p>
+        <div className="flex flex-col flex-1 mt-28 gap-3">
+          <button className="w-16 h-5 border rounded-full border-blue-500 text-xs">
+            {proData.isNew ? "ШИНЭ" : "ХУУЧИН"}
+          </button>
 
-          <h1>{proData.name}</h1>
-          <h3>{proData.description}</h3>
+          <h2 className="font-bold text-xl">{proData.name}</h2>
+          <p className="font-light text-sm">{proData.description}</p>
           <div>
             <p>Хэмжээний заавар</p>
-            <div>
-              <button>S</button>
-              <button>M</button>
-              <button>L</button>
-              <button>XL</button>
-              <button>2XL</button>
+            <div className="flex gap-1 p-1">
+              <button
+                className="w-8 h-8 rounded-full border-[1px] border-black text-center"
+                onClick={checksize}
+              >
+                S
+              </button>
+              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+                M
+              </button>
+              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+                L
+              </button>
+              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+                XL
+              </button>
+              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+                2XL
+              </button>
             </div>
-            <div>
-              <button>-</button>
-              <span>{proData.quantity}</span>
-              <button>+</button>
+
+            <div className="flex item-center gap-2 mt-3">
+              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+                -{" "}
+              </button>
+              <p className="mt-1">1</p>
+              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+                +
+              </button>
             </div>
           </div>
-          <h2>{proData.price}₮</h2>
-          <button>Сагсанд нэмэх</button>
-          <div>
-            <p>Үнэлгээ</p>
-            <button>бүгдийг харах</button>
-            <div></div>
-          </div>
-          <div className="flex flex-col gap-4">
-            <h1 className="text-2xl font-bold">{proData.name}</h1>
-            <p className="text-base">{proData.description}</p>
-            <p className="text-xl font-bold">{proData.price}₮</p>
-          </div>
+          <h1 className="font-bold">{proData.price}₮</h1>
+          <button className="w-40 h-8  mb-5 rounded-full text-white text-sm font-medium bg-blue-700">
+            Сагсанд нэмэх
+          </button>
+          <Review />
         </div>
       </div>
       <div className="w-9/12 m-auto">
-        <h1>Холбоотой бараа</h1>
+        <h1 className="font-bold text-2xl ">Холбоотой бараа</h1>
 
         <div className=" w-full  container grid grid-cols-4  gap-5 my-10 ">
           {products?.map((product, i) => {

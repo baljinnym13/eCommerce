@@ -21,7 +21,8 @@ const Header = () => {
       <div className="flex w-full justify-between text-white ">
         <div className="flex justify-between items-center gap-2 ">
           <img src="./logo.png" alt="logo" />
-          <h1 className="text-white mr-8">ECOMMERCE</h1>
+
+          <Link href="/">ECOMMERCE</Link>
           <button>Ангилал</button>
         </div>
         <div>
