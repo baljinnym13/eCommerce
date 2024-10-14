@@ -33,17 +33,6 @@ export function CollapsibleDemo() {
     }
     return reviewText;
   };
-  //   function App() {
-  //     const [rating, setRating] = React.useState(0);
-  //     return (
-  //       <Rating
-  //         style={{ maxWidth: 180 }}
-  //         value={rating}
-  //         onChange={setRating}
-  //         isRequired
-  //       />
-  //     );
-  //   }
 
   return (
     <Collapsible

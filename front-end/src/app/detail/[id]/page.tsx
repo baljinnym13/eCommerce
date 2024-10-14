@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
 import Review from "@/components/review";
+import { set } from "date-fns";
 
 interface IData {
   name: string;
@@ -20,9 +21,13 @@ interface IData {
   discount: number;
   category: string;
 }
+interface IClick {
+  click: boolean;
+}
 const Page: NextPage<any> = ({ params }) => {
   const [proData, setProData] = useState<IData>({} as IData);
   const [products, setProducts] = useState<IData[]>([]);
+  const [click, setClick] = useState("");
 
   const fetchProduct = async () => {
     try {
@@ -53,7 +58,9 @@ const Page: NextPage<any> = ({ params }) => {
   useEffect(() => {
     relatedProduct();
   }, [proData]);
-  const checksize = () => {};
+  const checksize = (size: string) => {
+    setClick(size);
+  };
 
   return (
     <>
@@ -88,21 +95,43 @@ const Page: NextPage<any> = ({ params }) => {
             <p>Хэмжээний заавар</p>
             <div className="flex gap-1 p-1">
               <button
-                className="w-8 h-8 rounded-full border-[1px] border-black text-center"
-                onClick={checksize}
+                className={`w-8 h-8 rounded-full border-[1px] border-black text-center ${
+                  click === "S" && "bg-black text-white"
+                } `}
+                onClick={() => checksize("S")}
               >
                 S
               </button>
-              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+              <button
+                className={`w-8 h-8 rounded-full border-[1px] border-black text-center ${
+                  click === "M" && "bg-black text-white"
+                }`}
+                onClick={() => checksize("M")}
+              >
                 M
               </button>
-              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+              <button
+                className={`w-8 h-8 rounded-full border-[1px] border-black text-center ${
+                  click === "L" && "bg-black text-white"
+                }`}
+                onClick={() => checksize("L")}
+              >
                 L
               </button>
-              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+              <button
+                className={`w-8 h-8 rounded-full border-[1px] border-black text-center ${
+                  click === "XL" && "bg-black text-white"
+                }`}
+                onClick={() => checksize("XL")}
+              >
                 XL
               </button>
-              <button className="w-8 h-8 rounded-full border-[1px] border-black text-center">
+              <button
+                className={`w-8 h-8 rounded-full border-[1px] border-black text-center ${
+                  click === "2XL" && "bg-black text-white"
+                }`}
+                onClick={() => checksize("2XL")}
+              >
                 2XL
               </button>
             </div>
