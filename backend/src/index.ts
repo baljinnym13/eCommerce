@@ -8,6 +8,7 @@ dotenv.config();
 import authRoute from "./routes/auth-route";
 import catRoute from "./routes/categoryRoute";
 import proRoute from "./routes/product-route";
+import saveCartRoute from "./routes/saveCartRoute";
 import { connectDB } from "./config/db";
 import { sendemail } from "./utils/send-email";
 const PORT = process.env.PORT || "";
@@ -23,22 +24,13 @@ app.use(express.json());
 app.use("/api/v1", catRoute);
 app.use("/api/v1/products", proRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/save", saveCartRoute);
 
 app.get("/", async (req: Request, res: Response) => {
   const rndOtp = Math.floor(Math.random() * 10000)
     .toString()
     .padStart(4, "0");
   sendemail("baljinnym1318@gmail.com", rndOtp);
-  //   const { data, error } = await resend.emails.send({
-  //     from: "Acme <onboarding@resend.dev>",
-  //     to: ["baljinnym1318@gmail.com"],
-  //     subject: "hello world",
-  //     html: generateHtmlTemplate(rndOtp),
-  //   });
-  //   if (error) {
-  //     console.error("EMAIL_ERR", { error });
-  //   }
-  //   res.send("wellcome ecommerce api server");
 });
 connectDB(MONGO_URI);
 

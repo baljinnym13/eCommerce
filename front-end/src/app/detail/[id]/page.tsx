@@ -5,7 +5,7 @@ import axios from "axios";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Heart } from "lucide-react";
+import { Heart, HeartIcon } from "lucide-react";
 import Review from "@/components/review";
 import { set } from "date-fns";
 
@@ -89,7 +89,14 @@ const Page: NextPage<any> = ({ params }) => {
             {proData.isNew ? "ШИНЭ" : "ХУУЧИН"}
           </button>
 
-          <h2 className="font-bold text-xl">{proData.name}</h2>
+          <h2 className="font-bold text-xl flex gap-2">
+            {proData.name}{" "}
+            <Heart
+              onClick={() => {
+                console.log("heart click");
+              }}
+            />
+          </h2>
           <p className="font-light text-sm">{proData.description}</p>
           <div>
             <p>Хэмжээний заавар</p>
@@ -169,7 +176,12 @@ const Page: NextPage<any> = ({ params }) => {
                           alt=""
                           className="w-full"
                         />
-                        <Heart className=" absolute top-8 right-8 text-gray-700" />
+                        <Heart
+                          onClick={() => {
+                            console.log("heart click");
+                          }}
+                          className=" absolute top-6 right-6 text-gray-700"
+                        />
                       </div>
 
                       <p>{product.name}</p>
@@ -183,7 +195,12 @@ const Page: NextPage<any> = ({ params }) => {
                           alt=""
                           className="w-full"
                         />
-                        <Heart className=" absolute top-8 right-8 text-gray-700" />
+                        <Heart
+                          onClick={() => {
+                            console.log("heart click");
+                          }}
+                          className=" absolute top-6 right-6 text-gray-700"
+                        />
                       </div>
 
                       <p>{product.name}</p>

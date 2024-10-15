@@ -18,10 +18,19 @@ export const authentication = (
   next: NextFunction
 ) => {
   if (!req.headers.authorization) {
-    return res.status(401).json({ message: "newterne v " });
+    return res
+      .status(401)
+      .json({ message: "Та энэ үйлдлийг хийхийн тулд нэвтэрнэ үү" });
   }
-  const token = req.headers.authorization?.split(" ")[1];
-  const user = decodeToken(token);
-  req.user = user;
-  next();
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    const user = decodeToken(token);
+    if (!user) {
+      return res.status(401).json({ message: "Хүчингүй токен" });
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Токен алдаатай байна", error });
+  }
 };
