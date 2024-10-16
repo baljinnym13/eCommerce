@@ -16,6 +16,7 @@ const Header = () => {
     localStorage.removeItem("token");
     router.push("/login");
   };
+
   return (
     <div className="w-full bg-black py-4 px-8 m-auto">
       <div className="flex w-full justify-between text-white ">
@@ -36,7 +37,9 @@ const Header = () => {
           </button>
         </div>
         <div className="flex justify-center items-center gap-2">
-          <FaRegHeart />
+          <Link href="/save">
+            <FaRegHeart />
+          </Link>
           <CgShoppingCart />
 
           {user ? (

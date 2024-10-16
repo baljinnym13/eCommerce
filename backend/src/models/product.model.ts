@@ -10,6 +10,8 @@ interface IProduct {
   quantity: number;
   discount: number;
   category: Schema.Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const productSchema = new Schema<IProduct>(
@@ -61,3 +63,5 @@ const productSchema = new Schema<IProduct>(
 const Product = model<IProduct>("Product", productSchema);
 
 export default Product;
+
+// Product.create

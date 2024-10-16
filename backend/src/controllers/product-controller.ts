@@ -27,6 +27,15 @@ export const getProducts = async (req: Request, res: Response) => {
     res.status(400).json({ message: "failed to get all product" });
   }
 };
+export const getHeroProduct = async (req: Request, res: Response) => {
+  try {
+    const product = await Product.find({}).sort({ created_at: -1 }).limit(1);
+    res.status(200).json({ message: "success to get all product", product });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ message: "failed to get all product" });
+  }
+};
 
 export const getProduct = async (req: Request, res: Response) => {
   const { productId } = req.params;

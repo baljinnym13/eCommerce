@@ -1,5 +1,5 @@
 "use client";
-// import { ProfileContext } from "@/context/profiles-context";
+
 import { formattedPrice } from "@/lib/utils";
 import { apiURL } from "@/utils/apiHome";
 import { PackProduct, Product, SaveProduct } from "@/utils/interface";
@@ -25,7 +25,7 @@ export const ProductCard = ({
   category,
 }: Product) => {
   const [productId, setProductId] = useState<string | null>(null);
-  //   const { setProductId } = useContext(ProfileContext);
+
   const createSaveProduct = async (product_id: string) => {
     const token = localStorage.getItem("token");
     try {
@@ -129,12 +129,12 @@ export const PriceWithDiscount = ({
   return (
     <div className="flex items-center gap-4 mt-1">
       <p className="font-bold">
-        {/* {formattedPrice(discount > 0 ? discountedPrice : price)}₮ */}
+        {formattedPrice(discount > 0 ? discountedPrice : price)}₮
       </p>
       {discount > 0 && (
         <>
           <span className="text-muted-foreground text-xs line-through">
-            {/* {`${formattedPrice(price)}₮`} */}
+            {`${formattedPrice(price)}₮`}
           </span>
           <span className="font-bold text-destructive">{discount}%</span>
         </>
@@ -206,7 +206,6 @@ export const PackCart = ({
   discount,
   choice,
 }: PackProduct) => {
-  //   const { setProductId } = useContext(ProfileContext);
   const [productId, setProductId] = useState<string | null>(null);
   const [count, setCount] = useState<number>(1);
   const handleSub = () => {
