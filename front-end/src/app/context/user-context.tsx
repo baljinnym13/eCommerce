@@ -82,8 +82,8 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       console.log("email failed");
     }
   };
-  console.log("first", otpValue);
-  console.log("email", email);
+  // console.log("first", otpValue);
+  // console.log("email", email);
 
   const fetchUserData = async () => {
     try {

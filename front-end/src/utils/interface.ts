@@ -41,6 +41,7 @@ export type IProduct = {
   images: [string];
   discount: number;
   isNew: boolean;
+  category: string;
 };
 
 export interface IUser {

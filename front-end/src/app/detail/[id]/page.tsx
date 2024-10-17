@@ -3,11 +3,12 @@
 import { apiURL } from "@/utils/apiHome";
 import axios from "axios";
 import { NextPage } from "next";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Heart, HeartIcon } from "lucide-react";
 import Review from "@/components/review";
-import { set } from "date-fns";
+import { IProduct } from "@/utils/interface";
+import Cards from "@/components/cards/cards";
+import { PriceWithDiscount } from "@/components/cards/productCard";
 
 interface IData {
   name: string;
@@ -25,7 +26,7 @@ interface IClick {
   click: boolean;
 }
 const Page: NextPage<any> = ({ params }) => {
-  const [proData, setProData] = useState<IData>({} as IData);
+  const [proData, setProData] = useState<IProduct>({} as IData);
   const [products, setProducts] = useState<IData[]>([]);
   const [click, setClick] = useState("");
 
@@ -46,7 +47,7 @@ const Page: NextPage<any> = ({ params }) => {
       const { data } = await axios.get(
         `${apiURL}/api/v1/products/related/${proData.category}`
       );
-      console.log("relatedPRODUCTS", data);
+
       setProducts(data);
     } catch (error) {}
   };
@@ -61,6 +62,7 @@ const Page: NextPage<any> = ({ params }) => {
   const checksize = (size: string) => {
     setClick(size);
   };
+  console.log("prodata", proData);
 
   return (
     <>
@@ -153,7 +155,10 @@ const Page: NextPage<any> = ({ params }) => {
               </button>
             </div>
           </div>
-          <h1 className="font-bold">{proData.price}₮</h1>
+          <PriceWithDiscount
+            price={proData?.price ?? 0}
+            discount={proData.discount ?? 0}
+          />
           <button className="w-40 h-8  mb-5 rounded-full text-white text-sm font-medium bg-blue-700">
             Сагсанд нэмэх
           </button>
@@ -164,50 +169,14 @@ const Page: NextPage<any> = ({ params }) => {
         <h1 className="font-bold text-2xl ">Холбоотой бараа</h1>
 
         <div className=" w-full  container grid grid-cols-4  gap-5 my-10 ">
-          {products?.map((product, i) => {
+          {products.map((product, index) => {
             return (
               <>
-                <Link href={"/detail/" + product._id}>
-                  {i === 6 || i === 7 ? (
-                    <div className=" row-span-2 col-span-2">
-                      <div className=" relative w-full rounded-2xl overflow-hidden">
-                        <img
-                          src={product.images[0]}
-                          alt=""
-                          className="w-full"
-                        />
-                        <Heart
-                          onClick={() => {
-                            console.log("heart click");
-                          }}
-                          className=" absolute top-6 right-6 text-gray-700"
-                        />
-                      </div>
-
-                      <p>{product.name}</p>
-                      <p className="font-bold">{product.price}</p>
-                    </div>
-                  ) : (
-                    <div>
-                      <div className=" relative  h-[331px] w-full rounded-2xl overflow-hidden">
-                        <img
-                          src={product.images[0]}
-                          alt=""
-                          className="w-full"
-                        />
-                        <Heart
-                          onClick={() => {
-                            console.log("heart click");
-                          }}
-                          className=" absolute top-6 right-6 text-gray-700"
-                        />
-                      </div>
-
-                      <p>{product.name}</p>
-                      <p className="font-bold">{product.price}</p>
-                    </div>
-                  )}
-                </Link>
+                {index === 6 || index === 7 ? (
+                  <Cards key={index} {...product} />
+                ) : (
+                  <Cards key={index} {...product} />
+                )}
               </>
             );
           })}

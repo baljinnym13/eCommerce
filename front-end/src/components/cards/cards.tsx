@@ -1,74 +1,93 @@
 "use client";
-import { apiURL } from "@/utils/apiHome";
 import { IProduct } from "@/utils/interface";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Heart } from "lucide-react";
+import { formattedPrice } from "@/lib/utils";
+import axios from "axios";
+import { apiURL } from "@/utils/apiHome";
+import { toast } from "react-toastify";
 
-const Cards = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const fetchProductsData = async () => {
+const Cards = ({ name, price, images, discount, _id }: IProduct) => {
+  const SaveProduct = async (product_id: string) => {
+    console.log("proIdasdasdasd", product_id);
+    const token = localStorage.getItem("token");
+    console.log("token", token);
     try {
-      const res = await axios.get(`${apiURL}/api/v1/products`);
-      setProducts(res.data.products);
+      const res = await axios.post(
+        `${apiURL}/api/v1/save/product`,
+        { product_id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        toast.success("Бараа амжилттай hadgallaa");
+      }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      toast.error("Нэвтэрнэ үү");
+      console.error(error);
     }
   };
-  useEffect(() => {
-    fetchProductsData();
-  }, []);
-  console.log("products cardiin", products);
+  const handleClick = (id: string) => {
+    SaveProduct(id);
+    
+  };
   return (
     <div>
       <div className=" w-9/12 m-auto container grid grid-cols-4  gap-5 my-10 ">
-        {products?.map((product, i) => {
-          return (
-            <>
-              <div className="relative w-[245px] h-[391px]">
-                <Link href={"/detail/" + product._id} className="w-full h-full">
-                  {i === 6 || i === 7 ? (
-                    <div className=" row-span-2 col-span-2  ">
-                      <div className="  w-full rounded-2xl overflow-hidden">
-                        <img
-                          src={product.images[0]}
-                          alt=""
-                          className="w-full h-full"
-                        />
-                      </div>
-
-                      <p>{product.name}</p>
-                      <p className="font-bold">{product.price}</p>
-                    </div>
-                  ) : (
-                    <div>
-                      <div className="   h-[331px] w-full rounded-2xl overflow-hidden">
-                        <img
-                          src={product.images[0]}
-                          alt=""
-                          className="w-full"
-                        />
-                      </div>
-
-                      <p>{product.name}</p>
-                      <p className="font-bold">{product.price}</p>
-                    </div>
-                  )}
-                </Link>
-                <Heart
-                  className=" absolute top-8 right-8 text-gray-700"
-                  onClick={() => {
-                    console.log("click");
-                  }}
-                />
+        <div className="relative w-[245px] h-[391px]">
+          <Link href={"/detail/" + _id} className="w-full h-full">
+            <div className=" row-span-2 col-span-2  ">
+              <div className="  w-full rounded-2xl overflow-hidden">
+                <img src={images[0]} alt="" className="w-full h-full" />
               </div>
-            </>
-          );
-        })}
+
+              <p>{name}</p>
+              <PriceWithDiscount price={price} discount={discount} />
+            </div>
+          </Link>
+          <Heart
+            className=" absolute top-8 right-8 text-gray-700"
+            onClick={() => {
+              handleClick(_id);
+            }}
+          />
+        </div>
       </div>
     </div>
   );
 };
 
 export default Cards;
+
+const getDiscountedPrice = (price: number, discount: number) => {
+  return price - (price * discount) / 100;
+};
+
+const PriceWithDiscount = ({
+  price,
+  discount,
+}: {
+  price: number;
+  discount: number;
+}) => {
+  const discountedPrice = getDiscountedPrice(price, discount);
+  return (
+    <div className="flex items-center gap-4 mt-1">
+      <p className="font-bold">
+        {formattedPrice(discount > 0 ? discountedPrice : price)}₮
+      </p>
+      {discount > 0 && (
+        <>
+          <span className="text-muted-foreground text-xs line-through">
+            {`${formattedPrice(price)}₮`}
+          </span>
+          <span className="font-bold text-destructive">{discount}%</span>
+        </>
+      )}
+    </div>
+  );
+};

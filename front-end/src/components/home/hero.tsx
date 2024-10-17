@@ -18,8 +18,7 @@ export const Hero = () => {
   useEffect(() => {
     fetchHeroData();
   }, []);
-  console.log("hero pro", product);
-  // console.log("hero data", data);
+
   return (
     <>
       {product?.map((pro, i) => {

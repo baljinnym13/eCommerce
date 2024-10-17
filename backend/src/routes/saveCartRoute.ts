@@ -4,6 +4,6 @@ import { authentication } from "../middlewares/authentication";
 
 const router = Router();
 
-router.route("/save/product").post(authentication, createSaveCart);
+router.route("/product").post(authentication, createSaveCart);
 
 export default router;
