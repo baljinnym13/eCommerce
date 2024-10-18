@@ -10,9 +10,8 @@ import { toast } from "react-toastify";
 
 const Cards = ({ name, price, images, discount, _id }: IProduct) => {
   const SaveProduct = async (product_id: string) => {
-    console.log("proIdasdasdasd", product_id);
     const token = localStorage.getItem("token");
-    console.log("token", token);
+
     try {
       const res = await axios.post(
         `${apiURL}/api/v1/save/product`,
@@ -26,6 +25,9 @@ const Cards = ({ name, price, images, discount, _id }: IProduct) => {
       if (res.status === 200) {
         toast.success("Бараа амжилттай hadgallaa");
       }
+      if (res.status === 201) {
+        toast.error("хадгалсан бараа байна");
+      }
     } catch (error) {
       toast.error("Нэвтэрнэ үү");
       console.error(error);
@@ -33,7 +35,6 @@ const Cards = ({ name, price, images, discount, _id }: IProduct) => {
   };
   const handleClick = (id: string) => {
     SaveProduct(id);
-    
   };
   return (
     <div>
